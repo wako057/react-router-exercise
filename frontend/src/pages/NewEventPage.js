@@ -9,12 +9,14 @@ export default NewEventPage;
 
 export async function action({ request, params }) {
     const data = await request.formData();
+    
     const eventData = {
         title: data.get('title'),
         image: data.get('image'),
         date: data.get('date'),
         description: data.get('description'),
     };
+
     const response = await fetch('http://localhost:8080/events', {
         method: 'POST',
         headers: {
@@ -23,7 +25,10 @@ export async function action({ request, params }) {
         body: JSON.stringify(eventData),
     });
 
-    console.log(response.ok);
+    if (response.status === 422) {
+        console.log('on a une erreur de validation return response');
+        return response;
+    }
 
     if (!response.ok) {
         throw json({ message: 'Could not save event.' }, { status: 500 });
