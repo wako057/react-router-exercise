@@ -1,5 +1,5 @@
 function HomePage() {
-    return (<h1>We are on HomePage</h1>);
+    return (<h1>We are on HomePage et alors</h1>);
 }
 
 
